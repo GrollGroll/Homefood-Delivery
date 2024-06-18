@@ -4,7 +4,7 @@ from logging import config as logging_config
 from pydantic import PostgresDsn
 from pydantic_settings import BaseSettings
 
-from core.logger import LOGGING
+from .logger import LOGGING
 
 logging_config.dictConfig(LOGGING)
 
