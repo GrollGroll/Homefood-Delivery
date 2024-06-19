@@ -1,23 +1,29 @@
-from pydantic import BaseModel
-from datetime import datetime
 import enum
+from datetime import datetime
+
+from pydantic import BaseModel
+
 
 class UserType(str, enum.Enum):
     customer = 'customer'
     chef = 'chef'
 
+
 class UserBase(BaseModel):
     username: str
     user_type: UserType
 
+
 class UserCreate(UserBase):
     password: str
+
 
 class User(UserBase):
     id: int
 
     class Config:
         orm_mode = True
+
 
 class OrderStatus(str, enum.Enum):
     pending = 'pending'
@@ -26,12 +32,15 @@ class OrderStatus(str, enum.Enum):
     ready = 'ready'
     delivered = 'delivered'
 
+
 class OrderBase(BaseModel):
     title: str
     description: str
 
+
 class OrderCreate(OrderBase):
     pass
+
 
 class Order(OrderBase):
     id: int

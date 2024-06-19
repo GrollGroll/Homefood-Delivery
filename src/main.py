@@ -1,7 +1,8 @@
 from fastapi import FastAPI
-from .routers import users, orders
+
 # from .database import engine, Base
 from .core.config import app_settings
+from .routers import orders, users
 
 app = FastAPI(title=app_settings.project_name)
 
