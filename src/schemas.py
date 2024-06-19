@@ -3,8 +3,8 @@ from datetime import datetime
 import enum
 
 class UserType(str, enum.Enum):
-    customer = "customer"
-    chef = "chef"
+    customer = 'customer'
+    chef = 'chef'
 
 class UserBase(BaseModel):
     username: str
@@ -20,11 +20,11 @@ class User(UserBase):
         orm_mode = True
 
 class OrderStatus(str, enum.Enum):
-    pending = "pending"
-    accepted = "accepted"
-    cooking = "cooking"
-    ready = "ready"
-    delivered = "delivered"
+    pending = 'pending'
+    accepted = 'accepted'
+    cooking = 'cooking'
+    ready = 'ready'
+    delivered = 'delivered'
 
 class OrderBase(BaseModel):
     title: str
