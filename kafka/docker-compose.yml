@@ -1,31 +1,6 @@
 version: '3.8'
 
 services:
-  web:
-    build: .
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
-      - kafka
-
-  db:
-    image: postgres:13
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: dbname
-    ports:
-      - "5432:5432"
-
-  telegram-bot:
-    image: python:3.10
-    env_file: .env
-    volumes:
-      - ./telegram:/app
-    working_dir: /app
-    command: ["sh", "-c", "pip install python-dotenv aiogram && python telegram_bot.py"]
-
   kafka:
     image: confluentinc/cp-kafka:latest
     ports:

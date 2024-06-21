@@ -3,11 +3,12 @@ from datetime import datetime
 from sqlalchemy.future import select
 from sqlalchemy.orm import Session
 
+import kafka_producer
 from . import models, schemas
 
 
-async def get_user_by_username(db: Session, username: str):
-    return db.query(models.User).filter(models.User.username == username).first()
+async def get_user_by_id(db: Session, id: int):
+    return db.query(models.User).filter(models.User.id == id).first()
 
 
 async def create_user(db: Session, user: schemas.UserCreate):
@@ -30,6 +31,8 @@ async def create_order(db: Session, order: schemas.OrderCreate, user_id: int):
     db.add(db_order)
     db.commit()
     db.refresh(db_order)
+    user = await get_user_by_id(db, user_id)
+    kafka_producer.send_order(user, db_order)
     return db_order
 
 
@@ -45,6 +48,8 @@ async def take_order(db: Session, user_id, order_id: int):
     db.add(order)
     db.commit()
     db.refresh(order)
+    user = await get_user_by_id(db, user_id)
+    kafka_producer.send_order(user, order)
     return order
 
 

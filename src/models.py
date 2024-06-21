@@ -18,6 +18,7 @@ class User(Base):
     username = Column(String, unique=True, index=True)
     password = Column(String)
     user_type = Column(Enum(UserType))
+    telegram_chat_id = Column(Integer)
 
     orders = relationship('Order', back_populates='owner')
 
