@@ -1,4 +1,4 @@
-<div id="header" align="center">
+<div id="header">
   <img src="/logo.png" width="200"/>
 
 # Домашний Шеф
