@@ -1,0 +1,5 @@
+DATABASE_DSN=postgresql+asyncpg://user:password@localhost/dbname
+PROJECT_NAME=food_delivery
+PROJECT_HOST=127.0.0.1
+PROJECT_PORT=8000
+BOT_TOKEN= B123123123: jjJHjh130-LHB123lhlHBH123

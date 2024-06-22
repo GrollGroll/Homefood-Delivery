@@ -1,5 +1,6 @@
-from confluent_kafka import Consumer, KafkaException
 import json
+
+from confluent_kafka import Consumer, KafkaException
 
 c = Consumer({
     'bootstrap.servers': 'localhost:29092',

@@ -1,11 +1,11 @@
 import asyncio
-from aiogram import Bot, Dispatcher
-import os
-from dotenv import load_dotenv
-from aiogram.types import Message
 import logging
+import os
 
 import kafka_consumer
+from aiogram import Bot, Dispatcher
+from aiogram.types import Message
+from dotenv import load_dotenv
 
 format = '%(asctime)s: %(message)s'
 logging.basicConfig(format=format, level=logging.INFO, datefmt='%H:%M:%S')
@@ -28,7 +28,7 @@ async def start_mailing():
     while True:
         try:
             await bot.send_message(chat_id=chat_id, text=massage)
-            await asyncio.sleep(1)
+            await asyncio.sleep(10)
         except Exception as e:
             logging.info(f'Не удалось отправить сообщение: {e}')
 

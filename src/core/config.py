@@ -14,6 +14,7 @@ class AppSettings(BaseSettings):
     project_name: str
     project_host: str
     project_port: int
+    bot_token: str
 
     BASE_DIR: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 

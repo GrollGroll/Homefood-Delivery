@@ -4,6 +4,7 @@ from sqlalchemy.future import select
 from sqlalchemy.orm import Session
 
 import kafka_producer
+
 from . import models, schemas
 
 
@@ -36,13 +37,18 @@ async def create_order(db: Session, order: schemas.OrderCreate, user_id: int):
     return db_order
 
 
-async def get_order_status(db: Session, order_id: int):
+async def get_order(db: Session, order_id: int):
     order = await db.execute(select(models.Order).where(models.Order.id == order_id))
-    return order.status
+    return order
+
+
+async def get_user_orders(db: Session, user_id: int):
+    orders = await db.execute(select(models.Order).where(models.Order.owner_id == user_id))
+    return orders
 
 
 async def take_order(db: Session, user_id, order_id: int):
-    order = await db.execute(select(models.Order).where(models.Order.id == order_id))
+    order = await get_order(db, order_id)
     order.chef_id = user_id
     order.status = 'accepted'
     db.add(order)
@@ -54,7 +60,7 @@ async def take_order(db: Session, user_id, order_id: int):
 
 
 async def cancel_order(db: Session, order_id: int):
-    order = await db.execute(select(models.Order).where(models.Order.id == order_id))
+    order = await get_order(db, order_id)
     order.chef_id = None
     order.status = 'pending'
     db.add(order)

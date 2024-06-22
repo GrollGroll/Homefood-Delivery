@@ -1,7 +1,9 @@
+from typing import List
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from .. import crud, dependencies
+from .. import crud, dependencies, schemas
 from . import auth
 
 router = APIRouter()
@@ -12,6 +14,12 @@ def check_chef(user):
         raise HTTPException(403, detail='You are not chef!')
     else:
         return True
+
+
+@router.get('/all_orders/', response_model=List[schemas.Order])
+async def read_orders(skip: int = 0, limit: int = 10, db: Session = Depends(dependencies.get_db)):
+    orders = await crud.get_orders(db, skip=skip, limit=limit)
+    return orders
 
 
 @router.post('/take_order/')

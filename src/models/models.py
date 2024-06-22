@@ -39,7 +39,7 @@ class Order(Base):
     description = Column(String, index=True)
     status = Column(Enum(OrderStatus), default=OrderStatus.PENDING)
     owner_id = Column(Integer, ForeignKey('users.id'))
-    chef_id = Column(Integer, ForeignKey('user.id'))
+    chef_id = Column(Integer, ForeignKey('users.id'))
     created_at = Column(DateTime)
     updated_at = Column(DateTime)
 
