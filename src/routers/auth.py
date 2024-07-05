@@ -5,8 +5,8 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.future import select
 from sqlalchemy.orm import Session
 
-from .. import dependencies
-from ..models import Token, User
+# from .. import dependencies
+from ..models import database, Token, User
 
 router = APIRouter()
 
@@ -14,7 +14,7 @@ router = APIRouter()
 # Авторизация
 @router.post('/auth')
 async def auth_user(form_data: OAuth2PasswordRequestForm = Depends(),
-                    db: Session = Depends(dependencies.get_db)):
+                    db: Session = Depends(database.get_db)):
     existing_user = await db.execute(select(User).where(User.username == form_data.username))
     existing_user = existing_user.scalar_one_or_none()
     if not existing_user:
@@ -34,7 +34,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl='auth')
 # Вернуть информацию о пользователе
 @router.get('/users/me')
 async def read_users_me(token: str = Depends(oauth2_scheme),
-                        db: Session = Depends(dependencies.get_db)):
+                        db: Session = Depends(database.get_db)):
     result = await db.execute(select(Token).join(User).where(Token.token == token))
     user = result.scalar_one_or_none()
     if not user:

@@ -3,7 +3,7 @@ from datetime import datetime
 from sqlalchemy.future import select
 from sqlalchemy.orm import Session
 
-import kafka_producer
+from . import kafka_producer
 
 from . import models, schemas
 

@@ -9,3 +9,4 @@ pydantic-settings==2.3.3
 alembic==1.13.1
 aiogram==3.8.0
 confluent-kafka==2.4.0
+python-multipart==0.0.9

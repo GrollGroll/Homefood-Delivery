@@ -9,6 +9,16 @@ services:
       - db
       - kafka
 
+  nginx:
+    image: nginx:1.19.2
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./configs:/etc/nginx/conf.d:ro
+    depends_on:
+      - web
+    ports:
+      - "80:80" 
+
   db:
     image: postgres:13
     environment:
@@ -24,7 +34,7 @@ services:
     volumes:
       - ./telegram:/app
     working_dir: /app
-    command: ["sh", "-c", "pip install python-dotenv aiogram kafka_consumer && python telegram_bot.py"]
+    command: ["sh", "-c", "pip install python-dotenv aiogram confluent_kafka && python telegram_bot.py"]
 
   kafka:
     image: confluentinc/cp-kafka:latest
